@@ -138,6 +138,8 @@ def main():
     all_message_hours: list[int] = []
     agent_counts: Counter = Counter()
     model_counts: Counter = Counter()
+    child_agent_counts: Counter = Counter()
+    child_model_counts: Counter = Counter()
     cost_by_model: Counter = Counter()
     session_summaries: list[dict] = []
     friction_details: list[str] = []
@@ -171,6 +173,8 @@ def main():
         all_message_hours.extend(meta.get("message_hours", []))
         _merge_counters(agent_counts, meta.get("agent_counts", {}))
         _merge_counters(model_counts, meta.get("model_counts", {}))
+        _merge_counters(child_agent_counts, meta.get("child_agent_counts", {}))
+        _merge_counters(child_model_counts, meta.get("child_model_counts", {}))
 
         # Cost by model
         for model_id, count in meta.get("model_counts", {}).items():
@@ -284,6 +288,8 @@ def main():
         "total_cost": round(total_cost, 2),
         "agent_counts": dict(Counter(agent_counts).most_common()),
         "model_counts": dict(Counter(model_counts).most_common()),
+        "child_agent_counts": dict(Counter(child_agent_counts).most_common()),
+        "child_model_counts": dict(Counter(child_model_counts).most_common()),
         "cost_by_model": {k: round(v, 2) for k, v in cost_by_model.most_common()},
         "sessions_using_task_agent": sessions_using_task_agent,
         "sessions_using_mcp": sessions_using_mcp,

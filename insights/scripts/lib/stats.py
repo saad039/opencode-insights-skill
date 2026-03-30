@@ -349,12 +349,25 @@ def extract_child_rollup(
 
 
 def merge_child_rollup(parent_stats: dict, child_rollup: dict) -> None:
-    """Merge child session rollup into parent stats in-place."""
-    for key in ("tool_counts", "languages", "agent_counts", "model_counts"):
+    """Merge child session rollup into parent stats in-place.
+
+    agent_counts and model_counts go into separate child_* keys
+    so the report can show parent vs subagent usage separately.
+    """
+    # These merge into parent
+    for key in ("tool_counts", "languages"):
         parent = parent_stats.get(key, {})
         for k, v in child_rollup.get(key, {}).items():
             parent[k] = parent.get(k, 0) + v
         parent_stats[key] = parent
+
+    # These go into separate child_* keys
+    for key in ("agent_counts", "model_counts"):
+        child_key = f"child_{key}"
+        child = parent_stats.get(child_key, {})
+        for k, v in child_rollup.get(key, {}).items():
+            child[k] = child.get(k, 0) + v
+        parent_stats[child_key] = child
 
     for key in ("git_commits", "git_pushes", "input_tokens", "output_tokens", "reasoning_tokens"):
         parent_stats[key] = parent_stats.get(key, 0) + child_rollup.get(key, 0)

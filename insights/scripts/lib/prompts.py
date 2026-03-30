@@ -469,8 +469,10 @@ def build_section_context(aggregate: dict) -> str:
         f"Satisfaction: {', '.join(f'{k}({v})' for k, v in agg.get('satisfaction', {}).items())}",
         f"Friction: {', '.join(f'{k}({v})' for k, v in agg.get('friction', {}).items())}",
         f"Languages: {', '.join(f'{k}({v})' for k, v in agg.get('languages', {}).items())}",
-        f"Models used: {', '.join(f'{k}({v})' for k, v in agg.get('model_counts', {}).items())}",
-        f"Agent modes: {', '.join(f'{k}({v})' for k, v in agg.get('agent_counts', {}).items())}",
+        f"Your models: {', '.join(f'{k}({v})' for k, v in agg.get('model_counts', {}).items())}",
+        f"Your agents: {', '.join(f'{k}({v})' for k, v in agg.get('agent_counts', {}).items())}",
+        f"Subagent models: {', '.join(f'{k}({v})' for k, v in agg.get('child_model_counts', {}).items())}",
+        f"Subagent activity: {', '.join(f'{k}({v})' for k, v in agg.get('child_agent_counts', {}).items())}",
         f"Total cost: ${agg.get('total_cost', 0):.2f}",
     ]
 

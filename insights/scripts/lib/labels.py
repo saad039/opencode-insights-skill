@@ -124,6 +124,7 @@ TOOL_ERROR_PATTERNS = {
     "User Rejected": ["rejected permission to use", "doesn't want"],
     "Edit Failed": [
         "could not find oldstring",       # OpenCode wording
+        "string to replace not found",    # Claude Code wording
         "no changes",
     ],
     "File Changed": ["modified since it was last read", "modified since read"],

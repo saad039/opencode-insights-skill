@@ -318,6 +318,8 @@ def render_html_report(aggregate: dict, sections: dict) -> str:
     chart_session_types = render_bar_chart(agg.get('session_types', _empty), CHART_COLORS['session_types'], label_map=SESSION_TYPES)
     chart_models = render_bar_chart(agg.get('model_counts', _empty), CHART_COLORS['models'])
     chart_agents = render_bar_chart(agg.get('agent_counts', _empty), CHART_COLORS['agents'])
+    chart_child_agents = render_bar_chart(agg.get('child_agent_counts', _empty), CHART_COLORS['agents'])
+    chart_child_models = render_bar_chart(agg.get('child_model_counts', _empty), CHART_COLORS['models'])
     chart_response = render_response_time_chart(agg.get('user_response_times', []), CHART_COLORS['response_times'])
     chart_tod = render_time_of_day_chart(agg.get('message_hours', []), CHART_COLORS['time_of_day'])
     chart_errors = render_bar_chart(agg.get('tool_error_categories', _empty), CHART_COLORS['tool_errors'])
@@ -1040,10 +1042,16 @@ p {{
 <div class="section">
 <h2 id="section-models" class="section-title">Your Toolkit</h2>
 <div class="charts-grid">
-<div class="chart-section"><h3>Models Used</h3>
+<div class="chart-section"><h3>Your Models</h3>
 {chart_models}</div>
-<div class="chart-section"><h3>Agent Modes</h3>
+<div class="chart-section"><h3>Subagent Models</h3>
+{chart_child_models}</div>
+</div>
+<div class="charts-grid" style="align-items:start;">
+<div class="chart-section"><h3>Your Agents</h3>
 {chart_agents}</div>
+<div class="chart-section"><h3>Subagent Activity</h3>
+{chart_child_agents}</div>
 </div>
 </div>
 
